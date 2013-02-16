@@ -1,0 +1,3 @@
+lib/tracks_attributes.rb 3d9b04aebec8565654eba4216be3fdc4e679a139
+lib/tracks_attributes/version.rb 90648dd96d3693664f9b0e134585ed1ed15da706
+lib/tracks_attributes/railtie.rb d2a74631b36dbaf6a18bee3918ed7bc5ac3f1cd8

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module TracksAttributes::TacksAttributesInternal - TracksAttributes</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/tracks_attributes.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-accessors">#accessors</a>
+    
+    <li><a href="#method-i-accessors_all">#accessors_all</a>
+    
+    <li><a href="#method-i-from_json">#from_json</a>
+    
+    <li><a href="#method-i-from_xml">#from_xml</a>
+    
+    <li><a href="#method-i-to_json">#to_json</a>
+    
+    <li><a href="#method-i-to_xml">#to_xml</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../TracksAttributes.html">TracksAttributes</a>
+  
+    <li><a href="../TracksAttributes/ClassMethods.html">TracksAttributes::ClassMethods</a>
+  
+    <li><a href="../TracksAttributes/Railtie.html">TracksAttributes::Railtie</a>
+  
+    <li><a href="../TracksAttributes/TacksAttributesInternal.html">TracksAttributes::TacksAttributesInternal</a>
+  
+    <li><a href="../TracksAttributes/TacksAttributesInternal/ClassMethods.html">TracksAttributes::TacksAttributesInternal::ClassMethods</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module TracksAttributes::TacksAttributesInternal</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-accessors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">accessors</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return the array of accessor symbols for instances of this class.</p>
+          
+
+          
+          <div class="method-source-code" id="accessors-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">accessors</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">accessors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- accessors-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- accessors-method -->
+
+    
+      <div id="method-i-accessors_all" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">accessors_all</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return a hash all of the accessor symbols and their values</p>
+          
+
+          
+          <div class="method-source-code" id="accessors_all-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">accessors_all</span>
+  <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">merge</span> <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">accessors</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">v</span>, <span class="ruby-identifier">send</span>(<span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_s</span>)] <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span> <span class="ruby-node">&quot;#{v}&quot;</span>.<span class="ruby-identifier">to_sym</span>}]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- accessors_all-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- accessors_all-method -->
+
+    
+      <div id="method-i-from_json" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_json</span><span
+            class="method-args">(json, include_root=false)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns an instance of <a
+href="../TracksAttributes.html">TracksAttributes</a> from a JSON string</p>
+          
+
+          
+          <div class="method-source-code" id="from_json-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">from_json</span>(<span class="ruby-identifier">json</span>, <span class="ruby-identifier">include_root</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">hash</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">json</span>)
+  <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">include_root</span>
+  <span class="ruby-identifier">assign_attrs_from_hash</span> <span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_json-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_json-method -->
+
+    
+      <div id="method-i-from_xml" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_xml</span><span
+            class="method-args">(xml)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns an instance of <a
+href="../TracksAttributes.html">TracksAttributes</a> from an XML string</p>
+          
+
+          
+          <div class="method-source-code" id="from_xml-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">xml</span>)
+  <span class="ruby-identifier">hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">xml</span>).<span class="ruby-identifier">values</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">assign_attrs_from_hash</span> <span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_xml-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_xml-method -->
+
+    
+      <div id="method-i-to_json" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_json</span><span
+            class="method-args">(options = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Convert an <a href="../TracksAttributes.html">TracksAttributes</a> instance
+to JSON by delegating conversion to Hash.to_json</p>
+
+<p>Without any options, the returned JSON string will include all of the
+attributes.</p>
+
+<p>The :only and :except options can be used to limit the attributes included,
+and will  accept 1 or more hash keys to include/exclude.</p>
+          
+
+          
+          <div class="method-source-code" id="to_json-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>(<span class="ruby-identifier">options</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">accessors_all</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_json-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_json-method -->
+
+    
+      <div id="method-i-to_xml" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_xml</span><span
+            class="method-args">(options = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Convert an <a href="../TracksAttributes.html">TracksAttributes</a> instance
+to XML by delegating conversion to Hash.to_xml</p>
+
+<p>Without any options, the returned XML string will include all of the
+attributes.</p>
+
+<p>The :only and :except options can be used to limit the attributes included,
+and will  accept 1 or more hash keys to include/exclude.</p>
+
+<p>The :builder option uses key as the :root for the XML result</p>
+          
+
+          
+          <div class="method-source-code" id="to_xml-source">
+            <pre><span class="ruby-comment"># File lib/tracks_attributes.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_xml</span>(<span class="ruby-identifier">options</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">accessors_all</span>.<span class="ruby-identifier">to_xml</span>(<span class="ruby-identifier">options</span> <span class="ruby-operator">||</span> {})
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_xml-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_xml-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
