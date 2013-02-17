@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.org/leopoldodonnell/tracks-attributes.png?branch=master)](https://travis-ci.org/leopoldodonnell/tracks-attributes)
+[![Dependency Status](https://gemnasium.com/leopoldodonnell/tracks-attributes.png)](https://gemnasium.com/leopoldodonnell/tracks-attributes)
+
 # TracksAttributes
 
 TracksAttributes adds the ability to track ActiveRecord and Object level attributes.

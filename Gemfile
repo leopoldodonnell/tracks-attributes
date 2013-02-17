@@ -24,6 +24,7 @@ group :development do
 end
 
 group :test do
+  gem "rake"
   gem "guard-rspec"
   gem "rb-fsevent"
   gem "activerecord"

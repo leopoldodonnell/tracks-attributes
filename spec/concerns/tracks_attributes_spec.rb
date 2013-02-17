@@ -16,28 +16,6 @@ describe "TracksAttributesSpec" do
       attr_accessor   :baz
     end
     
-    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS people")
-    ActiveRecord::Base.connection.create_table(:people) do |t|
-        t.string :name
-        t.string :email
-    end
-    class Person < ActiveRecord::Base
-      tracks_attributes
-      
-      attr_accessible :name, :email
-      attr_accessor :favorite_food
-    end
-    
-    fred = Person.create(:name => "Fred", :email => "fred@bedrock.com")
-    fred.favorite_food = 'Brontosaurus Burgers'
-    
-    fred_json = fred.to_json
-    puts fred_json
-    fred2 = Person.new
-    fred2.from_json(fred_json)
-    puts "#{fred2.name} loves #{fred2.favorite_food}"
-    
-    ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS people")
   end
   
   after(:all) do
