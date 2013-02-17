@@ -1,6 +1,7 @@
 
 [![Build Status](https://travis-ci.org/leopoldodonnell/tracks-attributes.png?branch=master)](https://travis-ci.org/leopoldodonnell/tracks-attributes)
 [![Dependency Status](https://gemnasium.com/leopoldodonnell/tracks-attributes.png)](https://gemnasium.com/leopoldodonnell/tracks-attributes)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/leopoldodonnell/tracks-attributes/badges)
 
 # TracksAttributes
 
