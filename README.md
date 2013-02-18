@@ -50,7 +50,7 @@ To add ActiveModel::Validations to your class just initialize your class with *t
 
 Add the following to your Gemfile
 
-    gem 'tracks-attributes', git => "git://github.com/leopoldodonnell/tracks-attributes"
+    gem 'tracks-attributes', :git => "git://github.com/leopoldodonnell/tracks-attributes"
 
 Then call bundle to install it.
 

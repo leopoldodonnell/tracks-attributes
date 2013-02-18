@@ -1,4 +1,4 @@
-# @auther Leo O'Donnell
+# @author Leo O'Donnell
 
 ##
 # A Module that can be used to extend ActiveRecord or Plain Old Ruby Objects
