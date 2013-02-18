@@ -16,26 +16,26 @@ Beyond the ability to track your attributes, this gem simplifies your use of con
 Once a class has been extended, it can convert to and from JSON or XML without having to explicitly include attributes.
 
 Example:
+```ruby
+class Person < ActiveRecordBase
+  tracks_attributes
+  
+  attr_accessible :name, :email
+  attr_accessor :favorite_food
+end
 
-    class Person < ActiveRecordBase
-      tracks_attributes
-      
-      attr_accessible :name, :email
-      attr_accessor :favorite_food
-    end
-    
-    fred = Person.find_by_name("Fred")
-    fred.favorite_food = 'Brontosaurus Burgers'
-    
-    fred_json = fred.to_json
-    puts fred_json
-    => {"id":1,"name":"Fred","email":"fred@bedrock.com","favorite_food":"Brontosaurus Burgers"}
-    
-    fred2 = Person.new
-    fred2.from_json(fred_json)
-    puts "#{fred2.name} loves #{fred2.favorite_food}"
-    => Fred loves Brontosaurus Burgers
+fred = Person.find_by_name("Fred")
+fred.favorite_food = 'Brontosaurus Burgers'
 
+fred_json = fred.to_json
+puts fred_json
+# => {"id":1,"name":"Fred","email":"fred@bedrock.com","favorite_food":"Brontosaurus Burgers"}
+
+fred2 = Person.new
+fred2.from_json(fred_json)
+puts "#{fred2.name} loves #{fred2.favorite_food}"
+# => Fred loves Brontosaurus Burgers
+```
 Both the JSON and XML take the same options as their Hash and ActiveRecord counterparts so you can still
 use *:only* and *:includes* in your code as needed.
 
@@ -43,8 +43,9 @@ use *:only* and *:includes* in your code as needed.
 
 To add ActiveModel::Validations to your class just initialize your class with *tracks_attributes* as
 
-    tracks_attributes :validates => true
-    
+```ruby
+  tracks_attributes :validates => true
+```  
 ## Installation
 
 Add the following to your Gemfile
@@ -53,5 +54,6 @@ Add the following to your Gemfile
 
 Then call bundle to install it.
 
+    > bundle
 
 This project rocks and uses MIT-LICENSE.
