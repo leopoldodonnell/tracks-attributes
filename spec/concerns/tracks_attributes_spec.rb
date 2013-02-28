@@ -170,5 +170,18 @@ describe "TracksAttributesSpec" do
     v.baz.should == 'BAZ'
     v.foo.should == 1
   end
-
+ 
+  it "should not track class attributes, but they should still work" do
+    class Tracker
+      include TracksAttributes
+      tracks_attributes
+      class_attribute :classy
+      attr_accessor :one
+    end
+      
+    t = Tracker.new
+    t.accessors.length.should == 1
+    t.respond_to?(:classy).should be true
+  end
+  
 end

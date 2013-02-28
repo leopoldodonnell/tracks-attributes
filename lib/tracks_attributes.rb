@@ -35,32 +35,33 @@ module TracksAttributes
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :tracked_attrs      
-      self.tracked_attrs ||= []
+      @tracked_attrs ||= []
     end
 
     module ClassMethods
       # override attr_accessor to track accessors for an TracksAttributes
       def attr_accessor(*vars)
-        tracked_attrs.concat vars if tracked_attrs
+        @tracked_attrs.concat vars
         super
       end
 
       # override attr_reader to track accessors for an TracksAttributes
       def attr_reader(*vars)
-        tracked_attrs.concat vars if tracked_attrs
+        @tracked_attrs.concat vars
         super
       end
 
       # override attr_writer to track accessors for an TracksAttributes
       def attr_writer(*vars)
-        tracked_attrs.concat vars if tracked_attrs
+        # avoid tracking attributes that are added by the class_attribute
+        # as these are class attributes and not instance attributes.
+        @tracked_attrs.concat vars.reject {|var| respond_to? var }
         super
       end
 
       # return an array of all of the attributes that are not in active record
       def accessors
-        self.tracked_attrs ||= []
+        @tracked_attrs ||= []
       end
 
     end
