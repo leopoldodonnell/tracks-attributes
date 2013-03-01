@@ -6,8 +6,9 @@
 
 TracksAttributes adds the ability to track ActiveRecord and Object level attributes.
 
-This module extends ActiveRecord::Base with the *tracks_attributes* class method. Once this has been called
-the class is extended with the ability to track attributes through *attr_accessor*, *attr_reader*, and *attr_writer*.
+Sometimes you just need to know what your accessors are at runtime, like when you're writing a controller that
+needs to return JSON or XML. This module extends ActiveRecord::Base with the *tracks_attributes* class method. Once this has 
+been called the class is extended with the ability to track attributes through *attr_accessor*, *attr_reader*, and *attr_writer*.
 Plain old Ruby classes may also use *TracksAttributes* by including it as a module first.
 
 ## Enhanced JSON and XML processing
