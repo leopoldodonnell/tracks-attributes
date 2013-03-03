@@ -62,6 +62,10 @@ To add ActiveModel::Validations to your class just initialize your class with *t
 ## Installation
 
 Add the following to your Gemfile
+    
+    gem 'tracs-attributes
+
+Or from the git repo for the bleeding edge (*feel free to star it :-)*)
 
     gem 'tracks-attributes', :git => "git://github.com/leopoldodonnell/tracks-attributes"
 
@@ -69,4 +73,6 @@ Then call bundle to install it.
 
     > bundle
 
-This project rocks and uses MIT-LICENSE.
+## License
+
+This project rocks and uses MIT-LICENSE. Copyright 2013 Leopold O'Donnell
