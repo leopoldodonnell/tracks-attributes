@@ -35,6 +35,15 @@ describe "TracksAttributesSpec" do
     UntrackedActiveRecord.should respond_to :accessors
   end
   
+
+  it "does not track class attributes like those added by class_attributes" do
+    TracksActiveRecord.class_attribute :classy_attribute
+    
+    TracksActiveRecord.should respond_to :classy_attribute
+    TracksActiveRecord.new.should respond_to :classy_attribute
+    TracksActiveRecord.accessors.index(:classy_attribute).should be nil
+  end
+    
   it "provides validators for non active_record attributes when specified with :validates => true" do
     class ValidatesAttributes
       include TracksAttributes

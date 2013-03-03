@@ -74,7 +74,8 @@ module TracksAttributes
 
     # Return a hash all of the accessor symbols and their values
     def all_attributes
-      attributes.merge Hash[accessors.collect {|v| [v, send(v.to_s)] if respond_to? "#{v}".to_sym}]
+      the_attrs = Hash[accessors.collect {|v| [v, send(v.to_s)] if respond_to? "#{v}".to_sym}]
+      (respond_to?(:attributes) && attributes.merge(the_attrs)) || the_attrs
     end
 
     # Set all attributes with hash of symbols and their values and returns instance
