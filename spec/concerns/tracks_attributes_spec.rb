@@ -193,4 +193,91 @@ describe "TracksAttributesSpec" do
     t.respond_to?(:classy).should be true
   end
   
+  it "should correctly re-hydrate an object instance if member variable types are provided" do
+    class NestedClass < TracksAttributes::Base
+      attr_accessor :one
+      attr_accessor :two
+    end
+    
+    class TrackedClass
+      include TracksAttributes
+      tracks_attributes
+      
+      attr_accessor :one 
+      attr_accessor :nested, :klass => NestedClass
+    end
+    
+    nested = NestedClass.new
+    nested.one = 1
+    nested.two = 2
+
+    tracked = TrackedClass.new
+    tracked.one = 'one'
+    tracked.nested = nested
+    
+    tracked_json = tracked.to_json
+    re_hydrated = TrackedClass.new
+    re_hydrated.from_json(tracked_json)
+    
+    re_hydrated.one.should == 'one'
+    re_hydrated.nested.class.should == NestedClass
+    re_hydrated.nested.one.should == 1
+    re_hydrated.nested.two.should == 2
+  end
+
+  it "should correctly re-hydrate an object instance with arrays where member variable types are provided" do
+    class NestedClass < TracksAttributes::Base
+      attr_accessor :one
+    end
+    
+    class TrackedClass
+      include TracksAttributes
+      tracks_attributes
+      
+      attr_accessor :nested, :klass => NestedClass
+    end
+    
+    nested      = NestedClass.new(:one => 1)
+    nested_too  = NestedClass.new(:one => 11)
+
+    tracked = TrackedClass.new
+    tracked.nested = [nested, nested_too]
+    
+    tracked_json = tracked.to_json
+    re_hydrated = TrackedClass.new
+    re_hydrated.from_json(tracked_json)
+    
+    re_hydrated.nested[0].class.should == NestedClass
+    re_hydrated.nested[0].one.should == 1
+    re_hydrated.nested[1].one.should == 11
+  end
+  
+  describe "TracksAttributesBaseSpec" do
+    it "Should implement tracks_attributes" do
+      class AttributeTracker < TracksAttributes::Base
+      end
+      
+      AttributeTracker.should respond_to :tracks_attributes
+    end
+    
+    it "Should provide validators" do
+      class AttributeTracker < TracksAttributes::Base
+      end
+      
+      AttributeTracker.should respond_to :validates
+    end
+    
+    it "Should track all attributes when derived" do
+      class BaseNestedClass < TracksAttributes::Base
+        attr_accessor :one
+      end
+
+      class NestedClass < TracksAttributes::Base
+        attr_accessor :two
+      end
+
+      NestedClass.accessors.include?(:one).should be true
+      NestedClass.accessors.include?(:two).should be true
+    end    
+  end
 end
