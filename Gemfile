@@ -16,11 +16,14 @@ gem "jquery-rails"
 gem "rspec-rails", :group => [:test, :development]
 
 group :development do
-  gem 'guard'
-  gem 'guard-bundler'
   gem 'yard'
   gem 'growl'
   gem 'ruby_gntp'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-yard'
+  gem 'redcarpet', "~>2.0"
+  gem 'github-markup'
 end
 
 group :test do
@@ -31,4 +34,4 @@ group :test do
   gem "sqlite3"
 end
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
