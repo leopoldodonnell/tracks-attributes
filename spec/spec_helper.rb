@@ -1,4 +1,5 @@
 require 'active_record'
+#require 'ruby-debug'
 
 FileUtils.mkdir_p("spec/db/")
 

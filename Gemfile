@@ -34,4 +34,4 @@ group :test do
   gem "sqlite3"
 end
 # To use debugger
-gem 'debugger'
+# gem 'debugger'
