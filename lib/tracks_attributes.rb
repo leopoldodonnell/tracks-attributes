@@ -1,5 +1,5 @@
 # @author Leo O'Donnell
-
+require 'tracks_attributes/attr_info'
 ##
 # A Module that can be used to extend ActiveRecord or Plain Old Ruby Objects
 # with the ability to track all attributes. It also simplifies streaming to and
@@ -8,6 +8,48 @@
 #
 # This module can also be used as building block for other classes that need to
 # be dynamically aware of their attributes.
+#
+# Instance re-hydration from a Hash/JSON/XML may be simple, or may need more complex handling.
+#
+# In the case of simple re-hydration, attributes are simply assigned their values.
+#
+# When instances have more complex instance variables that need to be made available
+# at run time when re-hydrating, a Class can be specified in the calls to <tt><attr_xxx/tt>
+# with the key <tt>:klass</tt>. During the call to <tt>:attributes=</tt>, the Hash's value
+# is used to consctruct an instance of <tt>klass</tt> if it supplies a <tt>klass::create</tt>
+# class method. If the attribute is an array, the array will be mapped from instances of
+# <tt>Hash</tt> to instances of <tt>klass</tt>
+#
+# *Example:*
+#
+#     class NestedClass
+#       include TracksAttributes
+#       tracks_attributes
+#       
+#       attr_accessor :one, :two
+#       
+#       def self.create(attributes = {})
+#         # code to create an instance of NestedClass
+#       end
+#     end
+#        
+#     class TrackedClass < ActiveRecord::Base
+#       tracks_attributes
+#      
+#       attr_accessible  :foo 
+#       attr_accessor    :nested, :klass => NestedClass
+#     end
+#
+# This example shows an <tt>ActiveRecord::Base</tt> class that has a plain old Ruby Object
+# nested inside that needs to be streamed to and from JSON. It includes the module <tt>TracksAttribues</tt>
+# and implements a <tt>:create</tt> class method.
+#
+# This example could be further simplified by using the <tt>TracksAttributes::Base</tt> class. <tt>NestedClass</tt>
+# would be re-cast as:
+#
+#     class NestedClass < TracksAttributes::Base
+#       attr_accessor :one, :two
+#     end
 #
 module TracksAttributes
   extend ActiveSupport::Concern
@@ -26,7 +68,7 @@ module TracksAttributes
     # @see TracksAttributesInternal TracksAttributesInternal for full method list
     def tracks_attributes(options={})
       include TracksAttributesInternal
-      include ActiveModel::Validations if options[:validates]
+      enable_validations if options[:validates]
       self
     end
   end
@@ -35,35 +77,78 @@ module TracksAttributes
     extend ActiveSupport::Concern
 
     included do
-      @tracked_attrs ||= []
+      @tracked_attrs ||= {}
     end
 
     module ClassMethods
-      # override attr_accessor to track accessors for an TracksAttributes
+      
+      # Override attr_accessor to track accessors for an TracksAttributes.
+      # If the last argument may be a <tt>Hash</tt> of options where the
+      # options may be:
+      #
+      # * klass - the Class of the attribute to create when re-hydrating
+      #           the instance from a Hash/JSON/XML
+      #
       def attr_accessor(*vars)
-        @tracked_attrs.concat vars
-        super
+        super *(add_tracked_attrs(true, true, *vars))
       end
 
-      # override attr_reader to track accessors for an TracksAttributes
+      # Override attr_reader to track accessors for an TracksAttributes.
+      # If the last argument may be a <tt>Hash</tt> of options where the
+      # options may be:
+      #
+      # * klass - the Class of the attribute to create when re-hydrating
+      #           the instance from a Hash/JSON/XML
+      #
       def attr_reader(*vars)
-        @tracked_attrs.concat vars
-        super
+        super *(add_tracked_attrs(true, false, *vars))
       end
 
-      # override attr_writer to track accessors for an TracksAttributes
+      # Override attr_writer to track accessors for an TracksAttributes.
+      # If the last argument may be a <tt>Hash</tt> of options where the
+      # options may be:
+      #
+      # * klass - the Class of the attribute to create when re-hydrating
+      #           the instance from a Hash/JSON/XML
+      #
       def attr_writer(*vars)
         # avoid tracking attributes that are added by the class_attribute
         # as these are class attributes and not instance attributes.
-        @tracked_attrs.concat vars.reject {|var| respond_to? var }
+        tracked_vars = vars.reject {|var| respond_to? var }
+        add_tracked_attrs(false, true, *tracked_vars)
+        vars.extract_options!
         super
       end
 
       # return an array of all of the attributes that are not in active record
       def accessors
-        @tracked_attrs ||= []
+        @tracked_attrs.keys ||= []
       end
 
+      # return the attribute information for the provided attribute
+      def attr_info_for(attribute_name)
+        @tracked_attrs[attribute_name.to_sym]
+      end
+      
+      # turn on ActiveModel:Validation validations
+      def enable_validations
+        include ActiveModel::Validations unless respond_to?(:_validators)
+      end
+      
+      private
+        def add_tracked_attrs(is_readable, is_writeable, *vars) #:nodoc:
+          attr_params = vars.extract_options!        
+          klass = attr_params[:klass]
+          vars.each do |var| 
+            @tracked_attrs[var] = AttrInfo.new(
+             :name  => var, 
+             :klass => klass, 
+             :is_readable   => is_readable,
+             :is_writeable  => is_writeable
+            )
+          end
+          vars
+        end
     end
 
     # Return the array of accessor symbols for instances of this
@@ -80,7 +165,7 @@ module TracksAttributes
 
     # Set all attributes with hash of symbols and their values and returns instance
     def all_attributes=(hash = {})
-      hash.each {|k, v| send("#{k.to_s}=", v) if respond_to? "#{k.to_s}=".to_sym}
+      hash.each { |k, v| set_attribute(k, v) }
       self
     end
 
@@ -122,7 +207,25 @@ module TracksAttributes
       self.all_attributes = hash
     end
 
+    private
+      def set_attribute(name, value) #:nodoc:
+        return unless respond_to? "#{name}=".to_sym 
+        
+        attr_info = self.class.attr_info_for name
+        klass     = attr_info && attr_info.klass
+        
+        if klass && klass.respond_to?(:create)
+          value = value.kind_of?(Array)? set_array_values(value, klass) : klass.create(value)
+        end
+        
+        send("#{name}=", value)
+      end
+      
+      def set_array_values(array, klass) #:nodoc:
+        array.map { |value| klass.create value }
+      end
   end
 end
 
+require 'tracks_attributes/base'
 require 'tracks_attributes/railtie'
