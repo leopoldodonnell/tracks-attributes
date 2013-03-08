@@ -6,3 +6,17 @@ test/dummy/db/*.sqlite3
 test/dummy/log/*.log
 test/dummy/tmp/
 test/dummy/.sass-cache
+.yardoc/checksums
+.yardoc/object_types
+.yardoc/objects/root.dat
+doc/TracksAttributes.html
+doc/TracksAttributes/ClassMethods.html
+doc/TracksAttributes/Railtie.html
+doc/TracksAttributes/TracksAttributesInternal.html
+doc/TracksAttributes/TracksAttributesInternal/ClassMethods.html
+doc/_index.html
+doc/class_list.html
+doc/file.README.html
+doc/index.html
+doc/method_list.html
+doc/top-level-namespace.html
