@@ -21,7 +21,7 @@ group :development do
   gem 'ruby_gntp'
   gem 'guard'
   gem 'guard-bundler'
-  gem 'guard-yard'
+  gem 'guard-yard' unless RUBY_VERSION =~ /1\.8.*/
   gem 'redcarpet', "~>2.0"
   gem 'github-markup'
 end
