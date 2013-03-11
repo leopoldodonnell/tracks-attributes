@@ -207,14 +207,13 @@ describe "TracksAttributesSpec" do
       attr_accessor :nested, :klass => NestedClass
     end
     
-    nested = NestedClass.new
-    nested.one = 1
-    nested.two = 2
-
+    nested = NestedClass.create(:one => 1, :two => 2)
+    
     tracked = TrackedClass.new
     tracked.one = 'one'
     tracked.nested = nested
-    
+
+    # tracked = TrackedClass.create(:one => 'one', :nested => nested)
     tracked_json = tracked.to_json
     re_hydrated = TrackedClass.new
     re_hydrated.from_json(tracked_json)
@@ -278,6 +277,23 @@ describe "TracksAttributesSpec" do
 
       NestedClass.accessors.include?(:one).should be true
       NestedClass.accessors.include?(:two).should be true
-    end    
+    end
+    
+    it "Should allow programtic creation from already hydrated variables" do
+      class NestedClass < TracksAttributes::Base
+        attr_accessor :one
+        attr_accessor :two
+      end
+
+      class ContainingClass  < TracksAttributes::Base
+        attr_accessor :one 
+        attr_accessor :nested, :klass => NestedClass
+      end
+
+      container = ContainingClass.create(:one => 'one', :nested => NestedClass.create(:one => 1, :two => 2))
+      container.one.should == 'one'
+      container.nested.one.should == 1
+    end
+        
   end
 end
