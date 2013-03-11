@@ -12,6 +12,7 @@ module TracksAttributes
   class Base
     extend ClassMethods
     include ActiveModel::Validations
+    tracks_attributes
     
     ##
     # The standard create class method needed by a class that implements
@@ -34,7 +35,6 @@ module TracksAttributes
     # @param [Hash] options to be passed onto the initialize method.
     #
     def initialize(attributes = {}, options = {})
-      self.class.tracks_attributes(options) unless self.class.respond_to? :attr_info_for
       self.all_attributes = attributes
     end
   end
