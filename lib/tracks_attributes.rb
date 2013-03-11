@@ -67,6 +67,8 @@ module TracksAttributes
     #
     # @see TracksAttributesInternal TracksAttributesInternal for full method list
     def tracks_attributes(options={})
+      return if respond_to? :attr_info_for  # prevent recursion
+      
       include TracksAttributesInternal
       enable_validations if options[:validates]
       self
@@ -75,10 +77,6 @@ module TracksAttributes
   
   module TracksAttributesInternal
     extend ActiveSupport::Concern
-
-    included do
-      @tracked_attrs ||= {}
-    end
 
     module ClassMethods
       
@@ -137,6 +135,8 @@ module TracksAttributes
       
       private
         def add_tracked_attrs(is_readable, is_writeable, *vars) #:nodoc:
+          @tracked_attrs ||= {}
+          
           attr_params = vars.extract_options!        
           klass = attr_params[:klass]
           vars.each do |var| 
@@ -213,11 +213,10 @@ module TracksAttributes
         
         attr_info = self.class.attr_info_for name
         klass     = attr_info && attr_info.klass
-        
-        if klass && klass.respond_to?(:create)
+
+        if klass && !value.kind_of?(klass) && klass.respond_to?(:create)
           value = value.kind_of?(Array)? set_array_values(value, klass) : klass.create(value)
         end
-        
         send("#{name}=", value)
       end
       
