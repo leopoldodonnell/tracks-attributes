@@ -15,6 +15,7 @@ guard 'rspec', :spec_paths => ['spec'] do
 end
 
 guard 'yard' do
+  watch(%r{.+\.md})
   watch(%r{app/.+\.rb})
   watch(%r{lib/.+\.rb})
   watch(%r{ext/.+\.c})
